@@ -1,0 +1,68 @@
+﻿@model ERP.Domain.Entities.Product
+
+@{
+  ViewBag.Title = "Product:Info " + Model.Name;
+  Layout = "~/Views/Shared/_InfoLayout.cshtml";
+}
+
+<div class="panel">
+  @using (Html.BeginForm("Edit", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+  {
+    <div class="panel-heading">
+      @*隐藏提交按钮*@
+      @if (ViewBag.Operate != "read")
+      {
+        <input type="submit" value="保存" class="btn btn-primary" />
+      }
+      @Html.ActionLink("取消并返回列表", "List", null, new { @class = "btn btn-default" })
+    </div>
+    <div class="panel-body row">
+      @Html.ValidationSummary()
+      @Html.HiddenFor(m => m.ID)
+      <div class="form-group col-sm-6 text-center">
+        <div style="position:relative;">
+          <label>选择文件</label>
+          <a href="javascript:;">
+            <input type="file" name="Image" size="40" style="width:100%;position:absolute;z-index:2;top:0;left:0;filter:alpha(opacity=0);opacity:0;background-color:transparent;color:transparent;" onchange='$("#upload-file-info").html($(this).val());' />
+          </a>
+          <span class="label label-info" id="upload-file-info"></span>
+        </div>
+        @if (Model.ImageData == null)
+        {
+          <div class="form-control-static" style="width:450px;height:450px;margin:0 auto;">没有图片</div>
+        }
+        else
+        {
+          <img class="img-thumbnail" width="450" height="450" src="@Url.Action("GetImage","Product",new { Model.ID})" />
+        }
+      </div>
+      <div class="input-group col-sm-6">
+        <span class="input-group-addon">@Html.LabelFor(x => x.Name)</span>
+        @Html.TextBoxFor(m => m.Name, null, new { @class = "form-control", maxlength = 100 })
+      </div>
+      @foreach (var property in ViewData.ModelMetadata.Properties)
+      {
+        switch (property.PropertyName)
+        {
+          case "ID":
+          case "ImageData":
+          case "ImageMimeType":
+          case "Name":
+            break;
+          case "Description":
+            <div class="input-group col-sm-6">
+              <span class="input-group-addon">@(property.DisplayName ?? property.PropertyName)</span>
+              @Html.TextArea(property.PropertyName, null, new { @class = "form-control", rows = 7, maxlength = 500 })
+            </div>
+            break;
+          default:
+            <div class="input-group col-sm-6">
+              <span class="input-group-addon">@(property.DisplayName ?? property.PropertyName)</span>
+              @Html.TextBox(property.PropertyName, null, new { @class = "form-control", maxlength = 100 })
+            </div>
+            break;
+        }
+      }
+    </div>
+  }
+</div>

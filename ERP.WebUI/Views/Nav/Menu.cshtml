@@ -1,0 +1,7 @@
+﻿@model IEnumerable<ERP.Domain.Entities.Menu>
+
+@Html.ActionLink("首页", "Index", "Home", null, new { @class = "btn btn-block btn-default btn-lg" })
+@foreach (var menu in Model)
+{
+  @Html.RouteLink(menu.DisplayName, new { controller = menu.Name, action = "List" }, new { @class = "btn btn-block btn-default btn-lg" })
+}

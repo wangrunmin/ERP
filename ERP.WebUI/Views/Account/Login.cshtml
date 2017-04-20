@@ -1,0 +1,58 @@
+﻿@model ERP.WebUI.Models.LoginViewModel
+
+@{
+  Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width" />
+  <link href="~/Content/bootstrap.css" rel="stylesheet" />
+  <script src="~/Scripts/jquery-1.10.2.js"></script>
+  <script src="~/Scripts/jquery.validate.js"></script>
+  <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+  <title>@ViewBag.Title</title>
+  <style>
+    .panel {
+      /*min-width:320px;*/
+      /*max-width: 400px;*/
+      margin: 0 auto;
+    }
+
+    .validation-summary-errors {
+      color: red;
+    }
+
+      .validation-summary-errors ul {
+        list-style: none;
+      }
+  </style>
+</head>
+<body class="text-center">
+  <div class="navbar navbar-inverse" role="navigation">
+    <a class="navbar-brand" href="#">E(⊙﹏⊙)R(●ˇ∀ˇ●)P</a>
+  </div>
+  <div class="panel row">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-8">
+      <div class="panel-heading">
+        <h3>登入</h3>
+      </div>
+      <div class="panel-body">
+        <p class="lead">进入系统前请登录，账号请联系管理员</p>
+        @using (Html.BeginForm())
+      {
+          @Html.ValidationSummary()
+          <div class="form-group">
+            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "用户名" })
+          </div>
+          <div class="form-group">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "密码" })
+          </div>
+          <input type="submit" value="登录" class="btn btn-block btn-lg btn-primary" />
+        }
+      </div>
+    </div>
+  </div>
+</body>
+</html>

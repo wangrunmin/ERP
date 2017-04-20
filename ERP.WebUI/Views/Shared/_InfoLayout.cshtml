@@ -1,0 +1,38 @@
+﻿@{
+  Layout = "~/Views/Shared/_ListLayout.cshtml";
+}
+<style>
+  .input-group {
+    margin-bottom: 5px;
+  }
+
+  .input-validation-error {
+    border: 1px red solid;
+  }
+
+  label {
+    margin-bottom: 0px;
+  }
+
+  textarea[disabled], input[disabled],select[disabled] {
+    cursor: default !important;
+  }
+</style>
+@RenderBody()
+
+@*read模式下禁用所有输入控件*@
+@if (ViewBag.Operate == "read")
+{
+  <script>
+    var input = document.getElementsByTagName('input');
+    for (var i = 0; i < input.length; i++) {
+      input[i].disabled = true;
+    }
+    var select = document.getElementsByTagName('select');
+    for (var i = 0; i < select.length; i++) {
+      select[i].disabled = true;
+    }
+    document.getElementsByTagName('textarea')[0].disabled = true;
+  </script>
+}
+
