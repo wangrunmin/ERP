@@ -11,5 +11,7 @@ namespace ERP.Domain.Concrete
     public DbSet<Purchase> Purchases { get; set; }
     public DbSet<Human> Humans { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<Customer> Customers { get; set; }
+    public DbSet<Market> Markets { get; set; }
   }
 }

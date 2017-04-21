@@ -30,5 +30,13 @@ namespace ERP.Domain.Abstract
     IEnumerable<User> Users { get; }
     void SaveUser(User user);
     User DeleteUser(int ID);
+
+    IEnumerable<Market> Markets { get; }
+    void SaveMarket(Market market);
+    Market DeleteMarket(int ID);
+
+    IEnumerable<Customer> Customers { get; }
+    void SaveCustomer(Customer customer);
+    Customer DeleteCustomer(int ID);
   }
 }

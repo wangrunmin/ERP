@@ -80,7 +80,9 @@
     <Compile Include="Abstract\IERPRepository.cs" />
     <Compile Include="Concrete\EFDbContext.cs" />
     <Compile Include="Concrete\EFProductRepository.cs" />
+    <Compile Include="Entities\Customer.cs" />
     <Compile Include="Entities\Human.cs" />
+    <Compile Include="Entities\Market.cs" />
     <Compile Include="Entities\Menu.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\Purchase.cs" />

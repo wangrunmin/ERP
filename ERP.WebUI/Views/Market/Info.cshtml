@@ -1,0 +1,79 @@
+﻿@model ERP.Domain.Entities.Market
+
+@{
+  ViewBag.Title = "Market:Info " + Model.ID;
+  Layout = "~/Views/Shared/_InfoLayout.cshtml";
+}
+
+<div class="panel">
+  @using (Html.BeginForm("Edit", "Market", FormMethod.Post, new { enctype = "multipart/form-data" }))
+  {
+    <div class="panel-heading">
+      @*隐藏提交按钮,采购关系表不允许修改*@
+      @if (ViewBag.Operate == "create")
+      {
+        <input type="submit" value="保存" class="btn btn-primary" />
+      }
+      @Html.ActionLink("取消并返回列表", "List", null, new { @class = "btn btn-default" })
+    </div>
+    <div class="panel-body">
+      @Html.ValidationSummary()
+      @Html.HiddenFor(m => m.ID)
+      @foreach (var property in ViewData.ModelMetadata.Properties)
+      {
+        switch (property.PropertyName)
+        {
+          case "ID":
+            break;
+          case "CustomerID":
+          case "ProductID":
+          case "HumanID":
+            <div class="input-group col-sm-4">
+              <span class="input-group-addon">@(property.DisplayName ?? property.PropertyName)</span>
+              @{
+                SelectList sl = null;
+                if (property.PropertyName == "CustomerID")
+                {
+                  sl = new SelectList(ViewBag.Customers, "ID", "Name");
+                }
+                if (property.PropertyName == "ProductID")
+                {
+                  sl = new SelectList(ViewBag.Products, "ID", "Name");
+                }
+                if (property.PropertyName == "HumanID")
+                {
+                  sl = new SelectList(ViewBag.Humans, "ID", "Name");
+                }
+              }
+              @Html.DropDownList(property.PropertyName, sl, new { @class = "form-control" })
+            </div>
+                  break;
+                case "Time":
+                  <div class="input-group col-sm-8">
+                    <span class="input-group-addon">@(property.DisplayName ?? property.PropertyName)</span>
+                    <input class="form-control" data-val="true" data-val-date="字段 Time 必须是时间。" id="@property.PropertyName" name="@property.PropertyName" type="datetime" value="@if (ViewBag.Operate == "create") { @DateTime.Now.ToString(); }else{ @Model.Time; }" />
+                  </div>
+                  break;
+                case "Status":
+                  <div class="input-group col-sm-4">
+                    <span class="input-group-addon">@(property.DisplayName ?? property.PropertyName)</span>
+                    @Html.DropDownList(property.PropertyName, new SelectList(new[] { "处理中", "已完成" }), new { @class = "form-control" })
+                  </div>
+                  break;
+                case "Description":
+                  <div class="input-group col-sm-12">
+                    <span class="input-group-addon">@(property.DisplayName ?? property.PropertyName)</span>
+                    @Html.TextArea(property.PropertyName, null, new { @class = "form-control", rows = 7, maxlength = 500 })
+                  </div>
+                  break;
+                default:
+                  <div class="input-group col-sm-4">
+                    <span class="input-group-addon">@(property.DisplayName ?? property.PropertyName)</span>
+                    @Html.TextBox(property.PropertyName, null, new { @class = "form-control", maxlength = 100 })
+                  </div>
+                      break;
+                  }
+                }
+    </div>
+                }
+</div>

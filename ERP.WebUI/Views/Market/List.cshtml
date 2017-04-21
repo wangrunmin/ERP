@@ -1,1 +1,93 @@
-﻿
+﻿@using ERP.WebUI.HtmlHelpers
+@model ERP.WebUI.Models.MarketListViewModel
+
+@{
+      ViewBag.Title = "List";
+}
+
+<div class="panel panel-default">
+  <div class="panel-heading" style="overflow:hidden">
+    <div class="pull-left">
+      <h3>销售系统</h3>
+    </div>
+    <div class="btn-group pull-right">
+      @Html.ActionLink("添加订单", "Create", null, new { @class = "btn btn-default" })
+    </div>
+  </div>
+  <div class="panel-body">
+    <table class="table table-striped table-condensed table-bordered">
+      <tr>
+        <th class="text-center">ID</th>
+        <th class="text-center">顾客</th>
+        <th class="text-center">产品</th>
+        <th class="text-center">经办人</th>
+        <th class="text-center">数量</th>
+        <th class="text-center">单价</th>
+        <th class="text-center">总额</th>
+        <th class="text-center">时间</th>
+        <th class="text-center">状态</th>
+      </tr>
+      @foreach (var p in Model.Markets)
+      {
+        <tr>
+          <td class="text-center">@Html.ActionLink(p.ID.ToString(), "Read", new { p.ID })</td>
+          <td class="text-center">
+            @{
+              IEnumerable<ERP.Domain.Entities.Customer> customers = ViewBag.Customers;
+              @customers.Where(x => x.ID == p.CustomerID).Select(x => x.Name).FirstOrDefault();
+            }
+          </td>
+          <td class="text-center">
+            @{
+              IEnumerable<ERP.Domain.Entities.Product> products = ViewBag.Products;
+              @products.Where(x => x.ID == p.ProductID).Select(x => x.Name).FirstOrDefault();
+            }
+          </td>
+          <td class="text-center">
+            @{
+              IEnumerable<ERP.Domain.Entities.Human> humans = ViewBag.Humans;
+              @humans.Where(x => x.ID == p.HumanID).Select(x => x.Name).FirstOrDefault();
+            }
+          </td>
+          <td class="text-center">@p.Quantity</td>
+          <td class="text-center">@p.Price</td>
+          <td class="text-center">@p.Total</td>
+          <td class="text-center">@p.Time</td>
+          <td class="text-center">
+            @if (p.Status == "处理中")
+            {
+              using (Html.BeginForm("Expire", "Market", FormMethod.Post, new { style = "margin-bottom:5px;" }))
+              {
+                @Html.Hidden("ID", p.ID)
+                <input type="submit" class="btn btn-danger btn-xs" onclick="javascript: return confirm('确认报废？');" value="报废" />
+              }
+              using (Html.BeginForm("Finish", "Market", FormMethod.Post, new { }))
+              {
+                @Html.Hidden("ID", p.ID)
+                <input type="submit" class="btn btn-success btn-xs" onclick="javascript: return confirm('完成交易？');" value="完成" />
+              }
+            }
+            else if (p.Status == "已完成")
+            {
+              <label style="color:green">已完成</label>
+            }
+            else if (p.Status == "已报废")
+            {
+              <label style="color:red">已报废</label>
+            }
+            else
+            {
+              <label style="color:red">未知错误，非法格式</label>
+            }
+          </td>
+        </tr>
+              }
+    </table>
+    <div class="btn-group pull-right">
+      @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x }))
+    </div>
+  </div>
+  <div class="panel-footer">
+
+  </div>
+</div>

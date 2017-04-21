@@ -1,7 +1,80 @@
 ﻿@model IEnumerable<ERP.Domain.Entities.Menu>
 
-@Html.ActionLink("首页", "Index", "Home", null, new { @class = "btn btn-block btn-default btn-lg" })
+@*@Html.ActionLink("首页", "Index", "Home", null, new { @class = "btn btn-block btn-default btn-lg" })
 @foreach (var menu in Model)
 {
   @Html.RouteLink(menu.DisplayName, new { controller = menu.Name, action = "List" }, new { @class = "btn btn-block btn-default btn-lg" })
-}
+}*@
+<a class="btn btn-block btn-default btn-lg" href="/">首页</a>
+<div class="btn btn-block btn-default btn-lg menu" onmouseover="onMouseOver(this);" onmouseout="onMouseLeave(this);">
+  销售管理
+  <ul class="content">
+    <li><a class="btn btn-block btn-default btn-lg" href="/Market/List">销售</a></li>
+  </ul>
+</div>
+<div class="btn btn-block btn-default btn-lg menu" onmouseover="onMouseOver(this);" onmouseout="onMouseLeave(this);">
+  采购管理
+  <ul class="content">
+    <li><a class="btn btn-block btn-default btn-lg" href="/Purchase/List">采购</a></li>
+  </ul>
+</div>
+@*<div class="btn btn-block btn-default btn-lg menu" onmouseover="onMouseOver(this);" onmouseout="onMouseLeave(this);">
+  仓库管理
+  <ul class="content">
+    <li><a class="btn btn-block btn-default btn-lg" href="/Purchase/List">采购信息</a></li>
+  </ul>
+</div>
+<div class="btn btn-block btn-default btn-lg menu" onmouseover="onMouseOver(this);" onmouseout="onMouseLeave(this);">
+  财务管理
+  <ul class="content">
+    <li><a class="btn btn-block btn-default btn-lg" href="/Purchase/List">采购信息</a></li>
+  </ul>
+</div>
+<div class="btn btn-block btn-default btn-lg menu" onmouseover="onMouseOver(this);" onmouseout="onMouseLeave(this);">
+  经营分析
+  <ul class="content">
+    <li><a class="btn btn-block btn-default btn-lg" href="/Purchase/List">采购信息</a></li>
+  </ul>
+</div>*@
+<div class="btn btn-block btn-default btn-lg menu" onmouseover="onMouseOver(this);" onmouseout="onMouseLeave(this);">
+  基础资料
+  <ul class="content">
+    <li><a class="btn btn-block btn-default btn-lg" href="/Human/List">人员信息</a></li>
+    <li><a class="btn btn-block btn-default btn-lg" href="/Product/List">商品信息</a></li>
+    <li><a class="btn btn-block btn-default btn-lg" href="/Supplier/List">供应商信息</a></li>
+    <li><a class="btn btn-block btn-default btn-lg" href="/Customer/List">顾客信息</a></li>
+  </ul>
+</div>
+<div class="btn btn-block btn-default btn-lg menu" onmouseover="onMouseOver(this);" onmouseout="onMouseLeave(this);">
+  系统设置
+  <ul class="content">
+    <li><a class="btn btn-block btn-default btn-lg">系统设置</a></li>
+  </ul>
+</div>
+
+<style>
+  .menu {
+    position: relative;
+  }
+
+  .content{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    z-index:99;
+  }
+    
+</style>
+<script>
+  function onMouseOver(obj){
+    var width = $('.menu').css('width');
+    $(obj).children().css('display', 'block').css('left', width).css('width', parseInt(width) / 2);
+  }
+  function onMouseLeave(obj) {
+    $(obj).children().css('display', 'none');
+  }
+</script>

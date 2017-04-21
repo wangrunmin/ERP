@@ -54,6 +54,20 @@ namespace ERP.Domain.Concrete
         return context.Users;
       }
     }
+    public IEnumerable<Customer> Customers
+    {
+      get
+      {
+        return context.Customers;
+      }
+    }
+    public IEnumerable<Market> Markets
+    {
+      get
+      {
+        return context.Markets;
+      }
+    }
 
     public void SaveProduct(Product product)
     {
@@ -222,6 +236,70 @@ namespace ERP.Domain.Concrete
       if (dbEntry != null)
       {
         context.Users.Remove(dbEntry);
+        context.SaveChanges();
+      }
+      return dbEntry;
+    }
+
+    public void SaveMarket(Market market)
+    {
+      if (market.ID == 0)
+      {
+        context.Markets.Add(market);
+      }
+      else
+      {
+        Market dbEntry = context.Markets.Find(market.ID);
+        if (dbEntry != null)
+        {
+          dbEntry.CustomerID = market.CustomerID;
+          dbEntry.ProductID = market.ProductID;
+          dbEntry.HumanID = market.HumanID;
+          dbEntry.Quantity = market.Quantity;
+          dbEntry.Price = market.Price;
+          dbEntry.Total = market.Total;
+          dbEntry.Time = market.Time;
+          dbEntry.Status = market.Status;
+          dbEntry.Description = market.Description;
+        }
+      }
+      context.SaveChanges();
+    }
+    public Market DeleteMarket(int ID)
+    {
+      Market dbEntry = context.Markets.Find(ID);
+      if (dbEntry != null)
+      {
+        context.Markets.Remove(dbEntry);
+        context.SaveChanges();
+      }
+      return dbEntry;
+    }
+
+    public void SaveCustomer(Customer customer)
+    {
+      if (customer.ID == 0)
+      {
+        context.Customers.Add(customer);
+      }
+      else
+      {
+        Customer dbEntry = context.Customers.Find(customer.ID);
+        if (dbEntry != null)
+        {
+          dbEntry.Name = customer.Name;
+          dbEntry.Phone = customer.Phone;
+          dbEntry.Description = customer.Description;
+        }
+      }
+      context.SaveChanges();
+    }
+    public Customer DeleteCustomer(int ID)
+    {
+      Customer dbEntry = context.Customers.Find(ID);
+      if (dbEntry != null)
+      {
+        context.Customers.Remove(dbEntry);
         context.SaveChanges();
       }
       return dbEntry;
