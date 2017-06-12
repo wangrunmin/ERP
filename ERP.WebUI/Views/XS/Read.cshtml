@@ -1,0 +1,58 @@
+﻿@model ERP.WebUI.Models.XSInfoViewModel
+
+@{
+  ViewBag.Title = "XS:Read " + Model.xs.iID;
+  Layout = "~/Views/Shared/_InfoLayout.cshtml";
+}
+<div class="panel">
+  <div class="panel-heading">
+    @Html.ActionLink("取消并返回列表", "List", null, new { @class = "btn btn-default" })
+  </div>
+  <div class="panel-body row">
+    @Html.ValidationSummary()
+    @*XS模型相关数据*@
+    @Html.HiddenFor(m => m.xs.iID)
+    <div class="input-group col-sm-6">
+      <span class="input-group-addon">@Html.DisplayNameFor(m => m.xs.CustomerName)</span>
+      @Html.TextBoxFor(m => m.xs.CustomerName, null, new { @class = "form-control", maxlength = 100 })
+    </div>
+    <div class="input-group col-sm-6">
+      <span class="input-group-addon">@Html.DisplayNameFor(m => m.xs.HumanName)</span>
+      @Html.TextBoxFor(m => m.xs.HumanName, null, new { @class = "form-control", maxlength = 100 })
+    </div>
+    <div class="input-group col-sm-6">
+      <span class="input-group-addon">@Html.DisplayNameFor(m => m.xs.Time)</span>
+      @Html.TextBoxFor(m => m.xs.Time, null, new { @class = "form-control", maxlength = 100 })
+    </div>
+    <div class="input-group col-sm-6">
+      <span class="input-group-addon">@Html.DisplayNameFor(m => m.xs.Total)</span>
+      @Html.TextBoxFor(m => m.xs.Total, null, new { @class = "form-control", maxlength = 100 })
+    </div>
+    @*Item模型相关数据*@
+    <div class="input-group col-sm-12">
+      <table class="table table-bordered">
+        <tbody class="table-striped" id="tablebody">
+          <tr>
+            <th>产品</th>
+            <th>数量</th>
+            <th>单价</th>
+            <th>小计</th>
+          </tr>
+          @foreach (var item in Model.Items)
+          {
+            <tr>
+              <td>@Html.DisplayTextFor(m => item.ProductName)</td>
+              <td>@Html.DisplayTextFor(m => item.Quantity)</td>
+              <td>@Html.DisplayTextFor(m => item.Price)</td>
+              <td>@Html.DisplayTextFor(m => item.Cost)</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <div class="input-group col-sm-12">
+      <span class="input-group-addon">@Html.DisplayNameFor(m => m.xs.Description)</span>
+      @Html.TextAreaFor(m => m.xs.Description, new { @class = "form-control", maxlength = 100, rows = 5 })
+    </div>
+  </div>
+</div>

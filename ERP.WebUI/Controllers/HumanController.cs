@@ -19,17 +19,7 @@ namespace ERP.WebUI.Controllers
     {
       repository = repo;
     }
-    public ViewResult Create()
-    {
-      ViewBag.Operate = "create";
-      return View("Info", new Human());
-    }
-    public ViewResult Read(int ID)
-    {
-      Human human = repository.Humans.FirstOrDefault(p => p.ID == ID);
-      ViewBag.Operate = "read";
-      return View("Info", human);
-    }
+
     public ViewResult List(int page = 1)
     {
       HumanListViewModel model = new HumanListViewModel
@@ -43,6 +33,17 @@ namespace ERP.WebUI.Controllers
         },
       };
       return View(model);
+    }
+    public ViewResult Create()
+    {
+      ViewBag.Operate = "create";
+      return View("Info", new Human());
+    }
+    public ViewResult Read(int ID)
+    {
+      Human human = repository.Humans.FirstOrDefault(p => p.ID == ID);
+      ViewBag.Operate = "read";
+      return View("Info", human);
     }
     public ViewResult Edit(int ID)
     {

@@ -1,2 +1,115 @@
-﻿这里是Index首页
-后续的信息将在下面展示……
+﻿@using System.Text;
+@model ERP.WebUI.Models.IndexListViewModel
+@{
+  ViewBag.Title = "Index";
+
+  //提取销售id和销售金额
+  var xsID = Model.XSs.Select(m => m.iID);
+  var xsTotal = Model.XSs.Select(m => m.Total);
+  //组合id成字符串，做表的横轴
+  StringBuilder xsText = new StringBuilder("");
+  foreach (var item in xsID)
+  {
+    xsText.Append(item.ToString() + ",");
+  }
+  //组合金额成字符串，做表的纵轴
+  StringBuilder xsValue = new StringBuilder("");
+  foreach (var item in xsTotal)
+  {
+    xsValue.Append(item.ToString() + ",");
+  }
+  //提取采购id和采购金额
+  var cgID = Model.CGs.Select(m => m.iID);
+  var cgTotal = Model.CGs.Select(m => m.Total);
+  //组合id成字符串，做表的横轴
+  StringBuilder cgText = new StringBuilder("");
+  foreach (var item in cgID)
+  {
+    cgText.Append(item.ToString() + ",");
+  }
+  //组合金额成字符串，做表的纵轴
+  StringBuilder cgValue = new StringBuilder("");
+  foreach (var item in cgTotal)
+  {
+    cgValue.Append(item.ToString() + ",");
+  }
+}
+@*销售和采购的图表*@
+<div class="col-xs-9">
+  <div style="width:100%;height:40px;">
+    <a class="btn btn-default" onclick="$('#xs').css('left', '0'); $('#cg').css('left', '-9999px');">销售</a>
+    <a class="btn btn-default" onclick="$('#xs').css('left', '-9999px'); $('#cg').css('left', '0');">采购</a>
+  </div>
+  <div id="xs" style="height:600px;width:100%;position:absolute;"></div>
+  <div id="cg" style="height:600px;width:100%;position:absolute;left:-9999px;"></div>
+</div>
+@*商品及库存量的表格*@
+<div class="col-xs-3">
+  <table class="table table-striped table-condensed table-bordered">
+    <tbody>
+      <tr>
+        <th class="text-center">商品</th>
+        <th class="text-center">库存数</th>
+      </tr>
+      @foreach (var item in Model.Products)
+      {
+        <tr>
+          <td class="text-center">@item.Name</td>
+          @{
+            if (item.Stock < item.StockFloor)
+            {
+              <td class="text-center" style="color:red;background-color:yellow;">@item.Stock</td>
+            }
+            else
+            {
+              <td class="text-center">@item.Stock</td>
+            }
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+<script src="~/Scripts/echarts.js"></script>
+@*echart绘图时所需的数据及绘制过程*@
+<script type="text/javascript">
+  // 基于准备好的dom，初始化echarts实例
+  var xs = echarts.init(document.getElementById('xs'));
+  var cg = echarts.init(document.getElementById('cg'));
+
+  // 指定图表的配置项和数据
+  var xsOption = {
+    tooltip: {},
+    legend: {
+      data: ['销售']
+    },
+    xAxis: {
+      data: [@xsText]
+    },
+    yAxis: {},
+    series: [{
+      name: '销售',
+      type: 'bar',
+      data: [@xsValue]
+    }]
+  };
+  var cgOption = {
+    tooltip: {},
+    legend: {
+      data: ['采购']
+    },
+    xAxis: {
+      data: [@cgText]
+    },
+    yAxis: {},
+    series: [{
+      name: '采购',
+      type: 'bar',
+      data: [@cgValue]
+    }]
+  };
+
+  // 使用刚指定的配置项和数据显示图表。
+  xs.setOption(xsOption);
+  cg.setOption(cgOption);
+</script>

@@ -1,0 +1,13 @@
+﻿.panel {
+  /*min-width:320px;*/
+  /*max-width: 400px;*/
+  margin: 0 auto;
+}
+
+.validation-summary-errors {
+  color: red;
+}
+
+  .validation-summary-errors ul {
+    list-style: none;
+  }

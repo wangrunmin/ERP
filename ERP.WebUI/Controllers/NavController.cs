@@ -12,11 +12,11 @@ namespace ERP.WebUI.Controllers
   public class NavController : Controller
   {
     private IERPRepository repository;
-
     public NavController(IERPRepository repo)
     {
       repository = repo;
     }
+
     public PartialViewResult Menu()
     {
       IEnumerable<Menu> menus = repository.Menus;

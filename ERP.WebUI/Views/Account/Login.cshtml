@@ -4,39 +4,27 @@
   Layout = null;
 }
 <!DOCTYPE html>
-
 <html>
 <head>
+  <title>@ViewBag.Title</title>
   <meta name="viewport" content="width=device-width" />
   <link href="~/Content/bootstrap.css" rel="stylesheet" />
-  <script src="~/Scripts/jquery-1.10.2.js"></script>
+  <link href="~/Content/Login.css" rel="stylesheet" />
+  <script src="~/Scripts/jquery-1.12.4.js"></script>
   <script src="~/Scripts/jquery.validate.js"></script>
   <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
-  <title>@ViewBag.Title</title>
-  <style>
-    .panel {
-      /*min-width:320px;*/
-      /*max-width: 400px;*/
-      margin: 0 auto;
-    }
-
-    .validation-summary-errors {
-      color: red;
-    }
-
-      .validation-summary-errors ul {
-        list-style: none;
-      }
-  </style>
 </head>
 <body class="text-center">
+  @* 导航栏 *@
   <div class="navbar navbar-inverse" role="navigation">
-    <a class="navbar-brand" href="#">E(⊙﹏⊙)R(●ˇ∀ˇ●)P</a>
+    <a class="navbar-brand" href="#">进销存系统</a>
   </div>
+  @* 主体内容 *@
   <div class="panel row">
+    @* 登录框响应式设计 *@
     <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-8">
       <div class="panel-heading">
-        <h3>登入</h3>
+        <h3>登录</h3>
       </div>
       <div class="panel-body">
         <p class="lead">进入系统前请登录，账号请联系管理员</p>

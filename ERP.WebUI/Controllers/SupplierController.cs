@@ -18,17 +18,7 @@ namespace ERP.WebUI.Controllers
     {
       this.repository = repo;
     }
-    public ViewResult Create()
-    {
-      ViewBag.Operate = "create";
-      return View("Info", new Supplier());
-    }
-    public ViewResult Read(int ID)
-    {
-      Supplier supplier = repository.Suppliers.FirstOrDefault(p => p.ID == ID);
-      ViewBag.Operate = "read";
-      return View("Info", supplier);
-    }
+
     public ViewResult List(int page = 1)
     {
       SupplierListViewModel model = new SupplierListViewModel
@@ -42,6 +32,17 @@ namespace ERP.WebUI.Controllers
         },
       };
       return View(model);
+    }
+    public ViewResult Create()
+    {
+      ViewBag.Operate = "create";
+      return View("Info", new Supplier());
+    }
+    public ViewResult Read(int ID)
+    {
+      Supplier supplier = repository.Suppliers.FirstOrDefault(p => p.ID == ID);
+      ViewBag.Operate = "read";
+      return View("Info", supplier);
     }
     public ViewResult Edit(int ID)
     {

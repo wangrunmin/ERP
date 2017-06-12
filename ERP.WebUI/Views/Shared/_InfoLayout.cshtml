@@ -1,25 +1,8 @@
 ﻿@{
   Layout = "~/Views/Shared/_ListLayout.cshtml";
 }
-<style>
-  .input-group {
-    margin-bottom: 5px;
-  }
-
-  .input-validation-error {
-    border: 1px red solid;
-  }
-
-  label {
-    margin-bottom: 0px;
-  }
-
-  textarea[disabled], input[disabled],select[disabled] {
-    cursor: default !important;
-  }
-</style>
+<link href="~/Content/InfoLayout.css" rel="stylesheet" />
 @RenderBody()
-
 @*read模式下禁用所有输入控件*@
 @if (ViewBag.Operate == "read")
 {

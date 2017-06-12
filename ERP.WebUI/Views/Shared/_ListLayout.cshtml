@@ -1,34 +1,42 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+  <title>@ViewBag.Title</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@ViewBag.Title</title>
   <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-  <script src="~/Scripts/modernizr-2.6.2.js"></script>
-  <style>
-    .table tbody > tr > td {
-      vertical-align: middle;
-    }
-  </style>
+  <link href="~/Content/ListLayout.css" rel="stylesheet" />
 </head>
 <body>
+  @* 导航栏 *@
   <div class="navbar navbar-inverse" role="navigation">
-    <a class="navbar-brand" href="#">极简进销存系统</a>
+    <a class="navbar-brand" href="#">进销存系统</a>
   </div>
-  <div class="row panel">
+  @* 主体 *@
+  <div class="row" style="height:100%;">
+    @* 菜单 *@
     <div id="menus" class="col-xs-12 col-md-3">
       @Html.Action("Menu", "Nav")
     </div>
+    @* 内容 *@
     <div class="col-xs-12 col-md-9">
       @RenderBody()
     </div>
   </div>
-  <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+  <script src="~/Scripts/modernizr-2.6.2.js"></script>
+  <script src="~/Scripts/jquery-1.12.4.min.js"></script>
   <script src="~/Scripts/bootstrap.min.js"></script>
-  @*<script>
+  <script>
+    //List项目双击进入Read页面。a标签的触发条件是标签内的内容Click。
+    function doubleClick(obj) {
+      var a_span = '<span id="a_span"><span>';
+      $(obj).find('a').append(a_span);
+      $('#a_span').click();
+    };
+    $('#xs').children().visible = true;
+    $('#cg').children().visible = false;
     //给选中菜单高亮效果
-    $('#menus a[href*="@ViewContext.RouteData.Values["controller"]/List"]').addClass("btn-primary");
-  </script>*@  
+    @*$('#menus a[href*="@ViewContext.RouteData.Values["controller"]/List"]').addClass("btn-primary");*@
+  </script>
 </body>
 </html>

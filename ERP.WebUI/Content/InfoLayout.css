@@ -1,0 +1,25 @@
+﻿.input-group {
+  margin-bottom: 5px;
+}
+
+.input-validation-error {
+  border: 1px red solid;
+}
+
+label {
+  margin-bottom: 0px;
+}
+
+textarea[disabled], input[disabled], select[disabled] {
+  cursor: default !important;
+}
+/*CG Info css*/
+td input[class="form-control"] {
+  border: none;
+  box-shadow: none;
+}
+
+.table {
+  margin-bottom: 0px;
+}
+

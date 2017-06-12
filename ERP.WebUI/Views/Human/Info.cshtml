@@ -62,15 +62,4 @@
       }
     </div>
   }
-  @*禁用所有输入控件
-  @if (ViewBag.Operate == "read")
-  {
-    <script>
-      var input = document.getElementsByTagName('input');
-      for (var i = 0; i < input.length; i++) {
-        input[i].disabled = true;
-      }
-      document.getElementsByTagName('textarea')[0].disabled = true;
-    </script>
-  }*@
 </div>

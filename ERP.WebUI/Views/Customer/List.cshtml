@@ -1,6 +1,5 @@
 ﻿@using ERP.WebUI.HtmlHelpers
 @model ERP.WebUI.Models.CustomerListViewModel
-
 @{
       ViewBag.Title = "List";
 }
@@ -26,20 +25,20 @@
       </tr>
       @foreach (var p in Model.Customers)
       {
-        <tr>
-          <td class="text-center">@p.ID</td>
-          <td class="text-center">@Html.ActionLink(p.Name, "Read", new { p.ID })</td>
-          <td class="text-center">@p.Phone</td>
-          <td class="text-center">@p.Description</td>
-          <td class="text-center">@Html.ActionLink("编辑", "Edit", new { p.ID })</td>
-          <td class="text-center">
-            @using (Html.BeginForm("Delete", "Customer"))
+      <tr ondblclick="doubleClick(this);">
+        <td class="text-center">@p.ID</td>
+        <td class="text-center">@Html.ActionLink(p.Name, "Read", new { p.ID })</td>
+        <td class="text-center">@p.Phone</td>
+        <td class="text-center">@p.Description</td>
+        <td class="text-center">@Html.ActionLink("编辑", "Edit", new { p.ID })</td>
+        <td class="text-center">
+          @using (Html.BeginForm("Delete", "Customer"))
             {
-              @Html.Hidden("ID", p.ID)
-              <input type="submit" class="btn btn-danger btn-xs" onclick="javascript: return confirm('此操作不可逆，是否确认删除？');" value="删除" />
+          @Html.Hidden("ID", p.ID)
+          <input type="submit" class="btn btn-danger btn-xs" onclick="javascript: return confirm('此操作不可逆，是否确认删除？');" value="删除" />
             }
-          </td>
-        </tr>
+        </td>
+      </tr>
       }
     </table>
     <div class="btn-group pull-right">
@@ -47,6 +46,6 @@
     </div>
   </div>
   <div class="panel-footer">
-
+    双击或者点击蓝色链接查看详细信息
   </div>
 </div>

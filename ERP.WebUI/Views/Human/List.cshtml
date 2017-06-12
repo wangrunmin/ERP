@@ -17,6 +17,7 @@
   <div class="panel-body">
     <table class="table table-striped table-condensed table-bordered">
       <tr>
+        <th class="text-center">ID</th>
         <th class="text-center">姓名</th>
         <th class="text-center">性别</th>
         <th class="text-center">手机</th>
@@ -27,11 +28,12 @@
       </tr>
       @foreach (var p in Model.Humans)
       {
-      <tr>
-        <td class="text-center">@Html.ActionLink(p.Name, "Read", new { p.ID })</td>
-        <td class="text-center">@p.Sex</td>
-        <td class="text-center">@p.Phone</td>
-        <td class="text-center">@p.WorkPlace</td>
+        <tr ondblclick="doubleClick(this);">
+          <td class="text-center">@p.ID</td>
+          <td class="text-center">@Html.ActionLink(p.Name, "Read", new { p.ID })</td>
+          <td class="text-center">@p.Sex</td>
+          <td class="text-center">@p.Phone</td>
+          <td class="text-center">@p.WorkPlace</td>
           <td class="text-center">@p.Job</td>
           <td class="text-center">@Html.ActionLink("编辑", "Edit", new { p.ID })</td>
           <td class="text-center">
@@ -49,7 +51,7 @@
     </div>
   </div>
   <div class="panel-footer">
-    <span style="color:#555;">点击姓名查看更多信息</span>
+    双击或者点击蓝色链接查看详细信息
   </div>
 </div>
 

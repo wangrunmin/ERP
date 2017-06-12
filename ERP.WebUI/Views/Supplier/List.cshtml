@@ -27,7 +27,7 @@
       </tr>
       @foreach (var p in Model.Suppliers)
       {
-        <tr>
+        <tr ondblclick="doubleClick(this);">
           <td class="text-center">@p.ID</td>
           <td class="text-center">@Html.ActionLink(p.Name, "Read", new { p.ID })</td>
           <td class="text-center">@p.Phone</td>
@@ -49,6 +49,6 @@
     </div>
   </div>
   <div class="panel-footer">
-
+    双击或者点击蓝色链接查看详细信息
   </div>
 </div>

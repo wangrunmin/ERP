@@ -18,17 +18,7 @@ namespace ERP.WebUI.Controllers
     {
       this.repository = repo;
     }
-    public ViewResult Create()
-    {
-      ViewBag.Operate = "create";
-      return View("Info", new Customer());
-    }
-    public ViewResult Read(int ID)
-    {
-      Customer customer = repository.Customers.FirstOrDefault(p => p.ID == ID);
-      ViewBag.Operate = "read";
-      return View("Info", customer);
-    }
+
     public ViewResult List(int page = 1)
     {
       CustomerListViewModel model = new CustomerListViewModel
@@ -43,10 +33,21 @@ namespace ERP.WebUI.Controllers
       };
       return View(model);
     }
+    public ViewResult Create()
+    {
+      ViewBag.Operate = "create";
+      return View("Info", new Customer());
+    }
+    public ViewResult Read(int ID)
+    {
+      ViewBag.Operate = "read";
+      Customer customer = repository.Customers.FirstOrDefault(p => p.ID == ID);
+      return View("Info", customer);
+    }
     public ViewResult Edit(int ID)
     {
-      Customer customer = repository.Customers.FirstOrDefault(p => p.ID == ID);
       ViewBag.Operate = "update";
+      Customer customer = repository.Customers.FirstOrDefault(p => p.ID == ID);
       return View("Info", customer);
     }
     [HttpPost]

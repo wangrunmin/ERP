@@ -19,6 +19,7 @@
     <div class="panel-body row">
       @Html.ValidationSummary()
       @Html.HiddenFor(m => m.ID)
+      @*图片选择*@
       <div class="form-group col-sm-6 text-center">
         <div style="position:relative;">
           <label>选择文件</label>
@@ -29,16 +30,12 @@
         </div>
         @if (Model.ImageData == null)
         {
-          <div class="form-control-static" style="width:450px;height:450px;margin:0 auto;">没有图片</div>
+        <div class="form-control-static" style="width:450px;height:450px;margin:0 auto;">没有图片</div>
         }
         else
         {
-          <img class="img-thumbnail" width="450" height="450" src="@Url.Action("GetImage","Product",new { Model.ID})" />
+        <img class="img-thumbnail" width="450" height="450" src="@Url.Action("GetImage","Product",new { Model.ID})" />
         }
-      </div>
-      <div class="input-group col-sm-6">
-        <span class="input-group-addon">@Html.LabelFor(x => x.Name)</span>
-        @Html.TextBoxFor(m => m.Name, null, new { @class = "form-control", maxlength = 100 })
       </div>
       @foreach (var property in ViewData.ModelMetadata.Properties)
       {
@@ -47,7 +44,6 @@
           case "ID":
           case "ImageData":
           case "ImageMimeType":
-          case "Name":
             break;
           case "Description":
             <div class="input-group col-sm-6">

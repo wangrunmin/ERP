@@ -1,0 +1,112 @@
+﻿@using System.Text;
+
+@using ERP.Domain.Entities;
+
+@model ERP.WebUI.Models.XSInfoViewModel
+
+@{
+  ViewBag.Title = "XS:Info " + Model.xs.iID;
+  Layout = "~/Views/Shared/_InfoLayout.cshtml";
+
+  IEnumerable<Product> products = ViewBag.Products;
+  StringBuilder productsText = new StringBuilder("");
+  foreach (var item in products.Select(m => m.Name))
+  {
+    productsText.Append(item.ToString());
+    productsText.Append(',');
+  }
+}
+<div class="panel">
+  @using (Html.BeginForm("Edit", "XS", FormMethod.Post, new { enctype = "multipart/form-data", autocomplete = "off" }))
+  {
+    <div class="panel-heading">
+      <input type="submit" value="保存" class="btn btn-primary" />
+      @Html.ActionLink("取消并返回列表", "List", null, new { @class = "btn btn-default" })
+    </div>
+    <div class="panel-body row">
+      @Html.ValidationSummary()
+      @*XS模型相关数据*@
+      @Html.HiddenFor(m => m.xs.iID)
+      <div class="input-group col-sm-6">
+        <span class="input-group-addon">@Html.DisplayNameFor(m => m.xs.CustomerName)</span>
+        @Html.TextBoxFor(m => m.xs.CustomerName, null, new { @class = "form-control", maxlength = 100 })
+      </div>
+      <div class="input-group col-sm-6">
+        <span class="input-group-addon">@Html.DisplayNameFor(m => m.xs.HumanName)</span>
+        @Html.TextBoxFor(m => m.xs.HumanName, null, new { @class = "form-control", maxlength = 100 })
+      </div>
+      <div class="input-group col-sm-6">
+        <span class="input-group-addon">@Html.DisplayNameFor(m => m.xs.Time)</span>
+        @Html.TextBoxFor(m => m.xs.Time, null, new { @class = "form-control", maxlength = 100 })
+      </div>
+      <div class="input-group col-sm-6">
+        <span class="input-group-addon">@Html.DisplayNameFor(m => m.xs.Total)</span>
+        @Html.TextBoxFor(m => m.xs.Total, null, new { @class = "form-control", maxlength = 100 })
+      </div>
+      @*Item模型相关数据*@
+      <div class="input-group col-sm-12">
+        <table class="table table-bordered">
+          <tbody class="table-striped" id="tablebody">
+            <tr>
+              <th>序号 <input type="button" value="+" onclick="AddRow(); productSuggest();" />&nbsp;<input type="button" value="-" onclick="MinusRow();productSuggest();" /></th>
+              <th>产品</th>
+              <th>数量</th>
+              <th>单价</th>
+              <th>小计</th>
+            </tr>
+            @for (int i = 0; i < (Model.Items == null ? 1 : Model.Items.Count); i++)
+            {
+              <tr>
+                <td>@(i + 1)<input data-val="true" data-val-number="字段 iID 必须是一个数字。" data-val-required="iID 字段是必需的。" id="Items_@(i)__iID" name="Items[@(i)].iID" type="hidden" value="0"></td>
+                <td>
+                  @Html.TextBoxFor(m => m.Items[i].ProductName, null, new { @class = "form-control product", maxlength = 100 })
+                  @*@Html.DropDownListFor(m => m.Items[i].ProductName, new SelectList(ViewBag.Products, "ID", "Name"), new { @class = "form-control" })*@
+                </td>
+                <td>@Html.TextBoxFor(m => m.Items[i].Quantity, null, new { @class = "form-control", maxlength = 100 })</td>
+                <td>@Html.TextBoxFor(m => m.Items[i].Price, null, new { @class = "form-control", maxlength = 100 })</td>
+                <td>@Html.TextBoxFor(m => m.Items[i].Cost, null, new { @class = "form-control", maxlength = 100 })</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      <div class="input-group col-sm-12">
+        <span class="input-group-addon">@Html.DisplayNameFor(m => m.xs.Description)</span>
+        @Html.TextAreaFor(m => m.xs.Description, new { @class = "form-control", maxlength = 100, rows = 5 })
+      </div>
+      @* AutoCompleted *@
+      <link href="~/Content/themes/base/all.css" rel="stylesheet" />
+      <script src="~/Scripts/jquery-1.12.4.js"></script>
+      <script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+      <script>
+        function CreateRow(rowNumber) {
+          var trObj = $("<tr>");
+          trObj.append($("<td>").append(rowNumber + '<input data-val="true" data-val-number="字段 iID 必须是一个数字。" data-val-required="iID 字段是必需的。" id="Items_' + (rowNumber - 1) + '__iID" name="Items[' + (rowNumber - 1) + '].iID" type="hidden" value="0">'));
+          trObj.append($("<td>").append('<input class="form-control product" id="Items_' + (rowNumber - 1) + '__ProductName" maxlength="100" name="Items[' + (rowNumber - 1) + '].ProductName" type="text" value="">'));
+          trObj.append($("<td>").append('<input class="form-control" data-val="true" data-val-number="字段 数量 必须是一个数字。" data-val-range="数量必须大于等于1" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="数量 字段是必需的。" id="Items_' + (rowNumber - 1) + '__Quantity" maxlength="100" name="Items[' + (rowNumber - 1) + '].Quantity" type="text" value="">'));
+          trObj.append($("<td>").append('<input class="form-control" data-val="true" data-val-number="字段 单价 必须是一个数字。" data-val-required="单价 字段是必需的。" id="Items_' + (rowNumber - 1) + '__Price" maxlength="100" name="Items[' + (rowNumber - 1) + '].Price" type="text" value="">'));
+          trObj.append($("<td>").append('<input class="form-control" data-val="true" data-val-number="字段 小计 必须是一个数字。" data-val-required="小计 字段是必需的。" id="Items_' + (rowNumber - 1) + '__Cost" maxlength="100" name="Items[' + (rowNumber - 1) + '].Cost" type="text" value="">'));
+          return trObj;
+        }
+        function AddRow() {
+          var rowNumber = $('#tablebody').children().length;
+          $('#tablebody').append(CreateRow(rowNumber));
+        }
+        function MinusRow() {
+          if ($('#tablebody').children().length > 2) {
+            $('#tablebody').children().last().remove();
+          }
+        }
+        function productSuggest() {
+          var availableTags = [@foreach (var item in products) {
+              @:"@item.Name",
+              }];
+          $(".product").autocomplete({
+            source: availableTags
+          });
+        };
+        productSuggest();
+      </script>
+    </div>
+  }
+</div>

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ERP.Domain.Entities;
+using System.Data.Entity.Validation;
 
 namespace ERP.Domain.Concrete
 {
@@ -33,13 +34,13 @@ namespace ERP.Domain.Concrete
       }
     }
 
-    public IEnumerable<Purchase> Purchases
-    {
-      get
-      {
-        return context.Purchases;
-      }
-    }
+    //public IEnumerable<Purchase> Purchases
+    //{
+    //  get
+    //  {
+    //    return context.Purchases;
+    //  }
+    //}
     public IEnumerable<Human> Humans
     {
       get
@@ -61,11 +62,46 @@ namespace ERP.Domain.Concrete
         return context.Customers;
       }
     }
-    public IEnumerable<Market> Markets
+    //public IEnumerable<Market> Markets
+    //{
+    //  get
+    //  {
+    //    return context.Markets;
+    //  }
+    //}
+    public IEnumerable<CG> CGs
     {
       get
       {
-        return context.Markets;
+        return context.CGs;
+      }
+    }
+    public IEnumerable<CGItem> CGItems
+    {
+      get
+      {
+        return context.CGItems;
+      }
+    }
+    public IEnumerable<XS> XSs
+    {
+      get
+      {
+        return context.XSs;
+      }
+    }
+    public IEnumerable<XSItem> XSItems
+    {
+      get
+      {
+        return context.XSItems;
+      }
+    }
+    public IEnumerable<Item> Items
+    {
+      get
+      {
+        return context.Items;
       }
     }
 
@@ -137,40 +173,74 @@ namespace ERP.Domain.Concrete
       return dbEntry;
     }
 
-    public void SavePurchase(Purchase purchase)
-    {
-      if (purchase.ID == 0)
-      {
-        context.Purchases.Add(purchase);
-      }
-      else
-      {
-        Purchase dbEntry = context.Purchases.Find(purchase.ID);
-        if (dbEntry != null)
-        {
-          dbEntry.SupplierID = purchase.SupplierID;
-          dbEntry.ProductID = purchase.ProductID;
-          dbEntry.HumanID = purchase.HumanID;
-          dbEntry.Quantity = purchase.Quantity;
-          dbEntry.Price = purchase.Price;
-          dbEntry.Total = purchase.Total;
-          dbEntry.Time = purchase.Time;
-          dbEntry.Status = purchase.Status;
-          dbEntry.Description = purchase.Description;
-        }
-      }
-      context.SaveChanges();
-    }
-    public Purchase DeletePurchase(int ID)
-    {
-      Purchase dbEntry = context.Purchases.Find(ID);
-      if (dbEntry != null)
-      {
-        context.Purchases.Remove(dbEntry);
-        context.SaveChanges();
-      }
-      return dbEntry;
-    }
+    //public void SavePurchase(Purchase purchase)
+    //{
+    //  if (purchase.ID == 0)
+    //  {
+    //    context.Purchases.Add(purchase);
+    //  }
+    //  else
+    //  {
+    //    Purchase dbEntry = context.Purchases.Find(purchase.ID);
+    //    if (dbEntry != null)
+    //    {
+    //      dbEntry.SupplierID = purchase.SupplierID;
+    //      dbEntry.ProductID = purchase.ProductID;
+    //      dbEntry.HumanID = purchase.HumanID;
+    //      dbEntry.Quantity = purchase.Quantity;
+    //      dbEntry.Price = purchase.Price;
+    //      dbEntry.Total = purchase.Total;
+    //      dbEntry.Time = purchase.Time;
+    //      dbEntry.Status = purchase.Status;
+    //      dbEntry.Description = purchase.Description;
+    //    }
+    //  }
+    //  context.SaveChanges();
+    //}
+    //public Purchase DeletePurchase(int ID)
+    //{
+    //  Purchase dbEntry = context.Purchases.Find(ID);
+    //  if (dbEntry != null)
+    //  {
+    //    context.Purchases.Remove(dbEntry);
+    //    context.SaveChanges();
+    //  }
+    //  return dbEntry;
+    //}
+    //public void SaveMarket(Market market)
+    //{
+    //  if (market.ID == 0)
+    //  {
+    //    context.Markets.Add(market);
+    //  }
+    //  else
+    //  {
+    //    Market dbEntry = context.Markets.Find(market.ID);
+    //    if (dbEntry != null)
+    //    {
+    //      dbEntry.CustomerID = market.CustomerID;
+    //      dbEntry.ProductID = market.ProductID;
+    //      dbEntry.HumanID = market.HumanID;
+    //      dbEntry.Quantity = market.Quantity;
+    //      dbEntry.Price = market.Price;
+    //      dbEntry.Total = market.Total;
+    //      dbEntry.Time = market.Time;
+    //      dbEntry.Status = market.Status;
+    //      dbEntry.Description = market.Description;
+    //    }
+    //  }
+    //  context.SaveChanges();
+    //}
+    //public Market DeleteMarket(int ID)
+    //{
+    //  Market dbEntry = context.Markets.Find(ID);
+    //  if (dbEntry != null)
+    //  {
+    //    context.Markets.Remove(dbEntry);
+    //    context.SaveChanges();
+    //  }
+    //  return dbEntry;
+    //}
 
     public void SaveHuman(Human human)
     {
@@ -241,40 +311,6 @@ namespace ERP.Domain.Concrete
       return dbEntry;
     }
 
-    public void SaveMarket(Market market)
-    {
-      if (market.ID == 0)
-      {
-        context.Markets.Add(market);
-      }
-      else
-      {
-        Market dbEntry = context.Markets.Find(market.ID);
-        if (dbEntry != null)
-        {
-          dbEntry.CustomerID = market.CustomerID;
-          dbEntry.ProductID = market.ProductID;
-          dbEntry.HumanID = market.HumanID;
-          dbEntry.Quantity = market.Quantity;
-          dbEntry.Price = market.Price;
-          dbEntry.Total = market.Total;
-          dbEntry.Time = market.Time;
-          dbEntry.Status = market.Status;
-          dbEntry.Description = market.Description;
-        }
-      }
-      context.SaveChanges();
-    }
-    public Market DeleteMarket(int ID)
-    {
-      Market dbEntry = context.Markets.Find(ID);
-      if (dbEntry != null)
-      {
-        context.Markets.Remove(dbEntry);
-        context.SaveChanges();
-      }
-      return dbEntry;
-    }
 
     public void SaveCustomer(Customer customer)
     {
@@ -300,6 +336,172 @@ namespace ERP.Domain.Concrete
       if (dbEntry != null)
       {
         context.Customers.Remove(dbEntry);
+        context.SaveChanges();
+      }
+      return dbEntry;
+    }
+
+    public int SaveCG(CG cg)
+    {
+      //try
+      //{
+      if (cg.iID == 0)
+      {
+        context.CGs.Add(cg);
+      }
+      else
+      {
+        CG dbEntry = context.CGs.Find(cg.iID);
+        if (dbEntry != null)
+        {
+          dbEntry.SupplierName = cg.SupplierName;
+          dbEntry.HumanName = cg.HumanName;
+          dbEntry.Total = cg.Total;
+          dbEntry.Time = cg.Time;
+          dbEntry.Description = cg.Description;
+        }
+      }
+      context.SaveChanges();
+      var last = context.CGs.ToList().LastOrDefault();
+      return last.iID;
+      //}
+      //catch (DbEntityValidationException dbEx)
+      //{
+
+      //}
+    }
+    public CG DeleteCG(int iID)
+    {
+      CG dbEntry = context.CGs.Find(iID);
+      if (dbEntry != null)
+      {
+        context.CGs.Remove(dbEntry);
+        context.SaveChanges();
+      }
+      return dbEntry;
+    }
+    public void SaveCGItem(CGItem cgItem)
+    {
+      if (cgItem.iID == 0)
+      {
+        context.CGItems.Add(cgItem);
+      }
+      else
+      {
+        CGItem dbEntry = context.CGItems.Find(cgItem.iID);
+        if (dbEntry != null)
+        {
+          dbEntry.CGiID = cgItem.CGiID;
+          dbEntry.ItemiID = cgItem.ItemiID;
+        }
+      }
+      context.SaveChanges();
+    }
+    public CGItem DeleteCGItem(int iID)
+    {
+      CGItem dbEntry = context.CGItems.Find(iID);
+      if (dbEntry != null)
+      {
+        context.CGItems.Remove(dbEntry);
+        context.SaveChanges();
+      }
+      return dbEntry;
+    }
+
+    public int SaveXS(XS xs)
+    {
+      //try
+      //{
+      if (xs.iID == 0)
+      {
+        context.XSs.Add(xs);
+      }
+      else
+      {
+        XS dbEntry = context.XSs.Find(xs.iID);
+        if (dbEntry != null)
+        {
+          dbEntry.CustomerName = xs.CustomerName;
+          dbEntry.HumanName = xs.HumanName;
+          dbEntry.Total = xs.Total;
+          dbEntry.Time = xs.Time;
+          dbEntry.Description = xs.Description;
+        }
+      }
+      context.SaveChanges();
+      var last = context.XSs.ToList().LastOrDefault();
+      return last.iID;
+      //}
+      //catch (DbEntityValidationException dbEx)
+      //{
+
+      //}
+    }
+    public XS DeleteXS(int iID)
+    {
+      XS dbEntry = context.XSs.Find(iID);
+      if (dbEntry != null)
+      {
+        context.XSs.Remove(dbEntry);
+        context.SaveChanges();
+      }
+      return dbEntry;
+    }
+    public void SaveXSItem(XSItem xsItem)
+    {
+      if (xsItem.iID == 0)
+      {
+        context.XSItems.Add(xsItem);
+      }
+      else
+      {
+        XSItem dbEntry = context.XSItems.Find(xsItem.iID);
+        if (dbEntry != null)
+        {
+          dbEntry.XSiID = xsItem.XSiID;
+          dbEntry.ItemiID = xsItem.ItemiID;
+        }
+      }
+      context.SaveChanges();
+    }
+    public XSItem DeleteXSItem(int iID)
+    {
+      XSItem dbEntry = context.XSItems.Find(iID);
+      if (dbEntry != null)
+      {
+        context.XSItems.Remove(dbEntry);
+        context.SaveChanges();
+      }
+      return dbEntry;
+    }
+
+    public int SaveItem(Item item)
+    {
+      if (item.iID == 0)
+      {
+        context.Items.Add(item);
+      }
+      else
+      {
+        Item dbEntry = context.Items.Find(item.iID);
+        if (dbEntry != null)
+        {
+          dbEntry.ProductName = item.ProductName;
+          dbEntry.Quantity = item.Quantity;
+          dbEntry.Price = item.Price;
+          dbEntry.Cost = item.Cost;
+        }
+      }
+      context.SaveChanges();
+      var last= context.Items.ToList().LastOrDefault();
+      return last.iID;
+    }
+    public Item DeleteItem(int iID)
+    {
+      Item dbEntry = context.Items.Find(iID);
+      if (dbEntry != null)
+      {
+        context.Items.Remove(dbEntry);
         context.SaveChanges();
       }
       return dbEntry;

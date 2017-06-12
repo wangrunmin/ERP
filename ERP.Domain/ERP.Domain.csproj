@@ -80,14 +80,17 @@
     <Compile Include="Abstract\IERPRepository.cs" />
     <Compile Include="Concrete\EFDbContext.cs" />
     <Compile Include="Concrete\EFProductRepository.cs" />
+    <Compile Include="Entities\CG.cs" />
+    <Compile Include="Entities\CGItem.cs" />
     <Compile Include="Entities\Customer.cs" />
     <Compile Include="Entities\Human.cs" />
-    <Compile Include="Entities\Market.cs" />
+    <Compile Include="Entities\Item.cs" />
     <Compile Include="Entities\Menu.cs" />
     <Compile Include="Entities\Product.cs" />
-    <Compile Include="Entities\Purchase.cs" />
     <Compile Include="Entities\Supplier.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\XS.cs" />
+    <Compile Include="Entities\XSItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

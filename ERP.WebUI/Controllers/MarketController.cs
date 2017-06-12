@@ -25,7 +25,7 @@ namespace ERP.WebUI.Controllers
     public ViewResult Create()
     {
       ViewBag.Operate = "create";
-      return View("Info", new Market());
+      return View("Info", new MarketInfoViewModel());
     }
     public ViewResult Read(int ID)
     {
